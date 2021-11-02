@@ -1,5 +1,6 @@
 package com.dadaepo.emo.dto;
 
+import com.dadaepo.emo.enums.NoticeType;
 import lombok.Getter;
 import lombok.Setter;
 

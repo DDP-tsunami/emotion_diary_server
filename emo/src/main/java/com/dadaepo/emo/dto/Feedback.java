@@ -1,5 +1,6 @@
 package com.dadaepo.emo.dto;
 
+import com.dadaepo.emo.enums.Reaction;
 import lombok.Getter;
 import lombok.Setter;
 

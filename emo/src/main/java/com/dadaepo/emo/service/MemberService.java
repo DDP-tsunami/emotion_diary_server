@@ -1,7 +1,9 @@
 package com.dadaepo.emo.service;
 
-import org.springframework.stereotype.Service;
+import com.dadaepo.emo.dto.request.MemberSignupRequest;
 
-@Service
 public interface MemberService {
+    void signup(MemberSignupRequest request);
+
+    boolean isExist(String userId);
 }

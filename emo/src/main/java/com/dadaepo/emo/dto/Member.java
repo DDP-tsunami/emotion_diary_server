@@ -1,17 +1,18 @@
 package com.dadaepo.emo.dto;
 
-import lombok.Getter;
-import lombok.Setter;
+import com.dadaepo.emo.enums.Role;
+import lombok.*;
 
-@Getter
-@Setter
-public class Member {
+@Builder
+@Data
+public class Member{
     private long id;
     private String userId;
-    private String nickname;
-    private String code;
-    private String profilePhotoUrl;
+    private String email;
     private String name;
+    private String nickname;
+    private String profilePhotoUrl;
     private String password;
-    private String timestamp;
+    private Role role;
+    private String date;
 }
