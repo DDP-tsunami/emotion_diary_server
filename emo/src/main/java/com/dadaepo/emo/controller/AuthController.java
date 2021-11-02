@@ -4,7 +4,6 @@ import com.dadaepo.emo.config.jwt.JwtFilter;
 import com.dadaepo.emo.config.jwt.TokenProvider;
 import com.dadaepo.emo.dto.Token;
 import com.dadaepo.emo.dto.request.LoginRequest;
-import com.dadaepo.emo.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -27,9 +26,6 @@ public class AuthController {
 
     @Autowired
     private AuthenticationManagerBuilder authenticationManagerBuilder;
-
-    @Autowired
-    private AuthService authService;
 
     @PostMapping(value = "/login")
     public ResponseEntity<Token> login(@RequestBody LoginRequest loginRequest) {

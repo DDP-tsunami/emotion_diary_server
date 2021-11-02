@@ -1,6 +1,7 @@
 package com.dadaepo.emo.controller;
 
 import com.dadaepo.emo.dto.request.MemberSignupRequest;
+import com.dadaepo.emo.dto.request.MemberUpdateRequest;
 import com.dadaepo.emo.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -27,5 +28,11 @@ public class MemberController {
             exist = "true";
         }
         return new ResponseEntity<>(exist, HttpStatus.OK);
+    }
+
+    @PutMapping(value = "/profile")
+    public ResponseEntity<Object> updateProfile(@RequestBody MemberUpdateRequest request) {
+        memberService.updateProfile(request);
+        return new ResponseEntity<>("succee", HttpStatus.OK);
     }
 }

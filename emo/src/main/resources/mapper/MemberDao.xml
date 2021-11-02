@@ -31,4 +31,9 @@
         FROM member
         WHERE user_id = #{userId}
     </select>
+    <update id="updateProfile" parameterType="com.dadaepo.emo.dto.request.MemberUpdateRequest">
+        UPDATE member
+        SET
+        WHERE
+    </update>
 </mapper>

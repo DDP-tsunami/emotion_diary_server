@@ -3,6 +3,7 @@ package com.dadaepo.emo.service.impl;
 import com.dadaepo.emo.dao.MemberDao;
 import com.dadaepo.emo.dto.Member;
 import com.dadaepo.emo.dto.request.MemberSignupRequest;
+import com.dadaepo.emo.dto.request.MemberUpdateRequest;
 import com.dadaepo.emo.enums.Role;
 import com.dadaepo.emo.service.MemberService;
 import lombok.extern.slf4j.Slf4j;
@@ -12,6 +13,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collections;
+import java.util.Optional;
+
+import static com.dadaepo.emo.util.SecurityUtil.getCurrentUsername;
 
 @Service
 @Slf4j
@@ -47,5 +51,15 @@ public class MemberServiceImpl implements MemberService {
             return false;
         }
         return true;
+    }
+
+    @Override
+    public void updateProfile(MemberUpdateRequest request) {
+        Optional<String> userId = getCurrentUsername();
+        System.out.println(userId);
+//        int updateMember = memberDao.updateProfile(request);
+//        if(updateMember < 0) {
+//            log.error("프로필 수정 중 에러가 발생하였습니다.");
+//        }
     }
 }
