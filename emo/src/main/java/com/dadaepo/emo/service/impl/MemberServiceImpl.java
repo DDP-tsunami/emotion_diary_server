@@ -6,6 +6,7 @@ import com.dadaepo.emo.dto.request.MemberSignupRequest;
 import com.dadaepo.emo.dto.request.MemberUpdateRequest;
 import com.dadaepo.emo.enums.Role;
 import com.dadaepo.emo.service.MemberService;
+import com.dadaepo.emo.util.SecurityUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -55,11 +56,16 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public void updateProfile(MemberUpdateRequest request) {
-        Optional<String> userId = getCurrentUsername();
-        System.out.println(userId);
-//        int updateMember = memberDao.updateProfile(request);
-//        if(updateMember < 0) {
-//            log.error("프로필 수정 중 에러가 발생하였습니다.");
-//        }
+        String userId = getCurrentUsername();
+        int updateMember = memberDao.updateProfile(request, userId);
+        if(updateMember < 0) {
+            log.error("프로필 수정 중 에러가 발생하였습니다.");
+        }
+    }
+
+    @Override
+    public Member getMyUserInfo() {
+        String userId = getCurrentUsername();
+        return memberDao.selectUserByUserId(userId);
     }
 }

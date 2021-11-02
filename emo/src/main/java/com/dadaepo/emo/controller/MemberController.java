@@ -1,5 +1,6 @@
 package com.dadaepo.emo.controller;
 
+import com.dadaepo.emo.dto.Member;
 import com.dadaepo.emo.dto.request.MemberSignupRequest;
 import com.dadaepo.emo.dto.request.MemberUpdateRequest;
 import com.dadaepo.emo.service.MemberService;
@@ -21,6 +22,10 @@ public class MemberController {
         return new ResponseEntity<>("success", HttpStatus.OK);
     }
 
+    @GetMapping(value = "")
+    public ResponseEntity<Member> getMyUserInfo() {
+        return ResponseEntity.ok(memberService.getMyUserInfo());
+    }
     @GetMapping(value = "/existence")
     public ResponseEntity<Object> isExist(@RequestParam("userId") String userId) {
         String exist = "false";
@@ -33,6 +38,6 @@ public class MemberController {
     @PutMapping(value = "/profile")
     public ResponseEntity<Object> updateProfile(@RequestBody MemberUpdateRequest request) {
         memberService.updateProfile(request);
-        return new ResponseEntity<>("succee", HttpStatus.OK);
+        return new ResponseEntity<>("success", HttpStatus.OK);
     }
 }

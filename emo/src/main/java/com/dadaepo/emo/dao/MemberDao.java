@@ -14,5 +14,5 @@ public interface MemberDao {
     int insertMember(Member member);
     Member selectUserByUserId(String userId);
     List<String> selectUserAuthOneByUserId(String userId);
-    int updateProfile(MemberUpdateRequest request);
+    int updateProfile(MemberUpdateRequest request, @Param(value = "userId") String userId);
 }

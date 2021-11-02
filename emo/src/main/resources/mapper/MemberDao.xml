@@ -33,7 +33,8 @@
     </select>
     <update id="updateProfile" parameterType="com.dadaepo.emo.dto.request.MemberUpdateRequest">
         UPDATE member
-        SET
-        WHERE
+        SET nickname = #{request.nickname}
+            , profile_photo_url = #{request.photoUrl}
+        WHERE user_id = #{userId}
     </update>
 </mapper>
