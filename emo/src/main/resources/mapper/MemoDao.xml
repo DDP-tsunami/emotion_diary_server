@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.dadaepo.emo.dao.MemoDao">
+    <insert id="insertMemo" parameterType="com.dadaepo.emo.dto.memo.EmotionRequest">
+        INSERT INTO memo(
+            member_id
+        , emotion
+        , emotion_scope
+        , detail
+        , detail_scope
+        )
+        Values(
+            #{memberId}
+        , #{emotion}
+        , #{emotionScope}
+        , #{detail}
+        , #{detailScope}
+        )
+    </insert>
+    <select id="selectMemoForMonth" resultType="com.dadaepo.emo.dto.memo.Memo" >
+        SELECT memo.id
+        , member_id AS memberId
+        , profile_photo_url AS profilePhotoUrl
+        , name
+        , nickname
+        , emotion
+        , emotion_scope AS emotionScope
+        , detail
+        , detail_scope AS detailScope
+        , memo.date
+        FROM memo
+        INNER JOIN member
+            ON memo.member_id = member.id
+        WHERE memo.date >= '${year}-${month}-01 00:00:00'
+            AND memo.date <![CDATA[ < ]]> '${nextYear}-${nextMonth}-01 00:00:00'
+            AND member_id = #{memberId}
+    </select>
+    <select id="selectFeed" resultType="com.dadaepo.emo.dto.memo.Line">
+        SELECT memo.id
+        , member_id AS memberId
+        , profile_photo_url AS profilePhotoUrl
+        , name
+        , nickname
+        , emotion
+        , emotion_scope AS emotionScope
+        , detail_scope AS detailScope
+        , memo.date
+        FROM friend
+        INNER JOIN memo
+            ON memo.member_id = friend.you_id
+        INNER JOIN member
+            ON friend.you_id = member.id
+        WHERE friend.me_id = #{memberId}
+            AND memo.emotion_scope = true
+        ORDER BY memo.date DESC
+        LIMIT #{start}, #{feedLimit}
+    </select>
+    <select id="countFeedByUserId" resultType="int">
+        SELECT COUNT(*)
+        FROM memo
+        INNER JOIN friend
+            ON memo.member_id = friend.you_id
+        WHERE friend.me_id = #{memberId}
+            AND memo.emotion_scope = true
+    </select>
+</mapper>

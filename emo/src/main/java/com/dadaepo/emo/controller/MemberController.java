@@ -1,8 +1,8 @@
 package com.dadaepo.emo.controller;
 
-import com.dadaepo.emo.dto.Member;
-import com.dadaepo.emo.dto.request.MemberSignupRequest;
-import com.dadaepo.emo.dto.request.MemberUpdateRequest;
+import com.dadaepo.emo.dto.member.Member;
+import com.dadaepo.emo.dto.member.MemberSignupRequest;
+import com.dadaepo.emo.dto.member.MemberUpdateRequest;
 import com.dadaepo.emo.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

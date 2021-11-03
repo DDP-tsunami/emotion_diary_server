@@ -1,4 +1,4 @@
-package com.dadaepo.emo.dto.request;
+package com.dadaepo.emo.dto.member;
 
 import lombok.Getter;
 

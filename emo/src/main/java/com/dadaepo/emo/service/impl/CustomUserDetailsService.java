@@ -1,8 +1,8 @@
 package com.dadaepo.emo.service.impl;
 
 import com.dadaepo.emo.dao.MemberDao;
-import com.dadaepo.emo.dto.Member;
-import com.dadaepo.emo.dto.UserDetailsVO;
+import com.dadaepo.emo.dto.member.Member;
+import com.dadaepo.emo.dto.member.UserDetailsVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

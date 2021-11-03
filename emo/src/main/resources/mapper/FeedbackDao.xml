@@ -2,23 +2,21 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.dadaepo.emo.dao.MemberDao">
-    <insert id="insertMember" parameterType="com.dadaepo.emo.dto.member.Member">
-        INSERT INTO member(
-            user_id
-        , nickname
-        , name
-        , password
-        , email
-        , role
+<mapper namespace="com.dadaepo.emo.dao.FeedbackDao">
+    <insert id="insertMemo" parameterType="com.dadaepo.emo.dto.memo.EmotionRequest">
+        INSERT INTO memo(
+        member_id
+        , emotion
+        , emotion_scope
+        , detail
+        , detail_scope
         )
         Values(
-            #{userId}
-        , #{nickname}
-        , #{name}
-        , #{password}
-        , #{email}
-        , #{role}
+        #{memberId}
+        , #{emotion}
+        , #{emotionScope}
+        , #{detail}
+        , #{detailScope}
         )
     </insert>
     <select id="selectUserAuthOneByUserId" resultType="String" >
@@ -34,7 +32,7 @@
     <update id="updateProfile" parameterType="com.dadaepo.emo.dto.member.MemberUpdateRequest">
         UPDATE member
         SET nickname = #{request.nickname}
-            , profile_photo_url = #{request.photoUrl}
+        , profile_photo_url = #{request.photoUrl}
         WHERE user_id = #{userId}
     </update>
 </mapper>

@@ -1,8 +1,8 @@
 package com.dadaepo.emo.service;
 
-import com.dadaepo.emo.dto.Member;
-import com.dadaepo.emo.dto.request.MemberSignupRequest;
-import com.dadaepo.emo.dto.request.MemberUpdateRequest;
+import com.dadaepo.emo.dto.member.Member;
+import com.dadaepo.emo.dto.member.MemberSignupRequest;
+import com.dadaepo.emo.dto.member.MemberUpdateRequest;
 
 public interface MemberService {
     void signup(MemberSignupRequest request);

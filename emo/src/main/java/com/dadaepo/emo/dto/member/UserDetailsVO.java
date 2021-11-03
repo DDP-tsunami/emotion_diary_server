@@ -1,4 +1,4 @@
-package com.dadaepo.emo.dto;
+package com.dadaepo.emo.dto.member;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

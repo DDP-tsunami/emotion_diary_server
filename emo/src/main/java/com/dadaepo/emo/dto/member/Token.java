@@ -1,4 +1,4 @@
-package com.dadaepo.emo.dto;
+package com.dadaepo.emo.dto.member;
 
 import lombok.*;
 

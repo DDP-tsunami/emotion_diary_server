@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.dadaepo.emo.dao.FriendDao">
+    <insert id="insertFriend" parameterType="com.dadaepo.emo.dto.friend.FriendRequest">
+        INSERT INTO friend(
+            me_id
+            , you_id
+        )
+        Values(
+            #{meId}
+            , #{youId}
+        );
+        INSERT INTO friend(
+            me_id
+            , you_id
+        )
+        Values(
+            #{youId}
+            , #{meId}
+        )
+    </insert>
+    <select id="selectFriends" resultType="com.dadaepo.emo.dto.member.MemberInfo" >
+        SELECT member.id
+            , user_id AS userId
+            , email
+            , name
+            , nickname
+            , profile_photo_url AS profilePhotoUrl
+            , date
+        FROM friend
+        INNER JOIN member
+            ON member.id = you_id
+        WHERE me_id = #{memberId}
+    </select>
+    <delete id="deleteFriend">
+        DELETE FROM friend
+        WHERE me_id = #{deleteMemberId}
+            AND you_id = #{meId};
+        DELETE FROM friend
+        WHERE you_id = #{deleteMemberId}
+            AND me_id = #{meId};
+    </delete>
+</mapper>

@@ -1,12 +1,11 @@
-package com.dadaepo.emo.dto;
+package com.dadaepo.emo.dto.friend;
 
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class Friend {
-    private long id;
+public class FriendRequest {
     private long meId;
     private long youId;
 }

@@ -2,8 +2,8 @@ package com.dadaepo.emo.controller;
 
 import com.dadaepo.emo.config.jwt.JwtFilter;
 import com.dadaepo.emo.config.jwt.TokenProvider;
-import com.dadaepo.emo.dto.Token;
-import com.dadaepo.emo.dto.request.LoginRequest;
+import com.dadaepo.emo.dto.member.Token;
+import com.dadaepo.emo.dto.member.LoginRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;

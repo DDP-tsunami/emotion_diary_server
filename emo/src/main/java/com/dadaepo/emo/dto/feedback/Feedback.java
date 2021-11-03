@@ -1,4 +1,4 @@
-package com.dadaepo.emo.dto;
+package com.dadaepo.emo.dto.feedback;
 
 import com.dadaepo.emo.enums.Reaction;
 import lombok.Getter;

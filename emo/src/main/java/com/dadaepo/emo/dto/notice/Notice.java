@@ -1,4 +1,4 @@
-package com.dadaepo.emo.dto;
+package com.dadaepo.emo.dto.notice;
 
 import com.dadaepo.emo.enums.NoticeType;
 import lombok.Getter;

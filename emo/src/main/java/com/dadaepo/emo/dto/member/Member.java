@@ -1,4 +1,4 @@
-package com.dadaepo.emo.dto;
+package com.dadaepo.emo.dto.member;
 
 import com.dadaepo.emo.enums.Role;
 import lombok.*;
