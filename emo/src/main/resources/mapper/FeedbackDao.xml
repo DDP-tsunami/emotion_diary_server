@@ -3,36 +3,32 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.dadaepo.emo.dao.FeedbackDao">
-    <insert id="insertMemo" parameterType="com.dadaepo.emo.dto.memo.EmotionRequest">
-        INSERT INTO memo(
-        member_id
-        , emotion
-        , emotion_scope
-        , detail
-        , detail_scope
+    <insert id="insertReaction" parameterType="com.dadaepo.emo.dto.feedback.ReactionRequest">
+        INSERT INTO feedback(
+            member_id
+            , memo_id
+            , reaction
         )
-        Values(
-        #{memberId}
-        , #{emotion}
-        , #{emotionScope}
-        , #{detail}
-        , #{detailScope}
+        VALUES(
+            #{memberId}
+            , #{memoId}
+            , #{reaction}
         )
     </insert>
-    <select id="selectUserAuthOneByUserId" resultType="String" >
-        SELECT role
-        FROM member
-        WHERE user_id = #{userId}
+    <select id="selectReactions" resultType="com.dadaepo.emo.dto.feedback.ReactionInfo">
+        SELECT reaction
+        , profile_photo_url AS photoURl
+        , name
+        , nickname
+        FROM feedback
+        INNER JOIN member
+            ON feedback.member_id = member.id
+        WHERE memo_id = #{memoId}
     </select>
-    <select id="selectUserByUserId" resultType="com.dadaepo.emo.dto.member.Member">
-        SELECT *
-        FROM member
-        WHERE user_id = #{userId}
+    <select id="selectCountReactionByType" resultType="int">
+        SELECT COUNT(*)
+        FROM feedback
+        WHERE memo_id = #{memoId}
+        GROUP BY reaction
     </select>
-    <update id="updateProfile" parameterType="com.dadaepo.emo.dto.member.MemberUpdateRequest">
-        UPDATE member
-        SET nickname = #{request.nickname}
-        , profile_photo_url = #{request.photoUrl}
-        WHERE user_id = #{userId}
-    </update>
 </mapper>

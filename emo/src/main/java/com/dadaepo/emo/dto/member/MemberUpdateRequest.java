@@ -6,4 +6,5 @@ import lombok.Getter;
 public class MemberUpdateRequest {
     private String nickname;
     private String photoUrl;
+
 }
