@@ -31,6 +31,28 @@
         FROM member
         WHERE user_id = #{userId}
     </select>
+    <select id="selectUserByMemberId" resultType="com.dadaepo.emo.dto.member.MemberInfo">
+        SELECT id
+            , user_id AS userId
+            , email
+            , name
+            , nickname
+            , profile_photo_url AS profilePhotoUrl
+            , date
+        FROM member
+        WHERE id = #{memberId}
+    </select>
+    <select id="selectUserByEmail" resultType="com.dadaepo.emo.dto.member.MemberInfo">
+        SELECT id
+            , user_id AS userId
+            , email
+            , name
+            , nickname
+            , profile_photo_url AS profilePhotoUrl
+            , date
+        FROM member
+        WHERE email like '%${email}%'
+    </select>
     <update id="updateProfile" parameterType="com.dadaepo.emo.dto.member.MemberUpdateRequest">
         UPDATE member
         SET nickname = #{request.nickname}

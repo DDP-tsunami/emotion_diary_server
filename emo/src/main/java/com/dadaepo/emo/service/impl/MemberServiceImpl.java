@@ -1,9 +1,7 @@
 package com.dadaepo.emo.service.impl;
 
 import com.dadaepo.emo.dao.MemberDao;
-import com.dadaepo.emo.dto.member.Member;
-import com.dadaepo.emo.dto.member.MemberSignupRequest;
-import com.dadaepo.emo.dto.member.MemberUpdateRequest;
+import com.dadaepo.emo.dto.member.*;
 import com.dadaepo.emo.enums.Role;
 import com.dadaepo.emo.service.MemberService;
 import lombok.extern.slf4j.Slf4j;
@@ -63,5 +61,18 @@ public class MemberServiceImpl implements MemberService {
     public Member getMyUserInfo() {
         String userId = getCurrentUsername();
         return memberDao.selectUserByUserId(userId);
+    }
+
+    @Override
+    public MemberInfoResponse getUserByEmail(String email) {
+
+        MemberInfoResponse memberInfos = new MemberInfoResponse();
+
+        if(email.equals("")) {
+            return memberInfos;
+        }
+        memberInfos.setMemberInfoList(memberDao.selectUserByEmail(email));
+
+        return memberInfos;
     }
 }

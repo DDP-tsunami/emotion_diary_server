@@ -3,36 +3,41 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.dadaepo.emo.dao.NoticeDao">
-    <insert id="insertMemo" parameterType="com.dadaepo.emo.dto.memo.EmotionRequest">
-        INSERT INTO memo(
-        member_id
-        , emotion
-        , emotion_scope
-        , detail
-        , detail_scope
+    <insert id="insertNotice" parameterType="com.dadaepo.emo.dto.notice.NoticeRequest">
+        INSERT INTO notice(
+            send_id
+        , receive_id
+        , type
         )
         Values(
-        #{memberId}
-        , #{emotion}
-        , #{emotionScope}
-        , #{detail}
-        , #{detailScope}
+            #{sendId}
+        , #{receiveId}
+        , #{type}
         )
     </insert>
-    <select id="selectUserAuthOneByUserId" resultType="String" >
-        SELECT role
-        FROM member
-        WHERE user_id = #{userId}
+    <select id="selectNotices" resultType="com.dadaepo.emo.dto.notice.NoticeInfo" >
+        SELECT id
+            , type
+            , status
+            , date
+            , send_id AS sendId
+        FROM notice
+        WHERE receive_id = #{memberId}
+        ORDER BY date DESC
+        LIMIT #{start}, #{limit}
     </select>
-    <select id="selectUserByUserId" resultType="com.dadaepo.emo.dto.member.Member">
-        SELECT *
-        FROM member
-        WHERE user_id = #{userId}
+    <select id="selectTotalCount" resultType="int">
+        SELECT COUNT(*)
+        FROM notice
+        WHERE receive_id = #{memberId}
     </select>
-    <update id="updateProfile" parameterType="com.dadaepo.emo.dto.member.MemberUpdateRequest">
-        UPDATE member
-        SET nickname = #{request.nickname}
-        , profile_photo_url = #{request.photoUrl}
-        WHERE user_id = #{userId}
+    <update id="updateStatus">
+        UPDATE notice
+        SET status = true
+        WHERE id = #{noticeId}
     </update>
+    <delete id="deleteNotice">
+        DELETE FROM notice
+        WHERE id = #{noticeId}
+    </delete>
 </mapper>

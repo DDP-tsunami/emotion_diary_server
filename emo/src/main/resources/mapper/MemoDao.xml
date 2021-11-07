@@ -65,4 +65,9 @@
         WHERE friend.me_id = #{memberId}
             AND memo.emotion_scope = true
     </select>
+    <select id="selectEmotionDetail" resultType="String">
+        SELECT detail
+        FROM memo
+        WHERE id = #{emotionId}
+    </select>
 </mapper>

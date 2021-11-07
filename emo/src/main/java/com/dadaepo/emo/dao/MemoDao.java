@@ -16,4 +16,6 @@ public interface MemoDao {
     List<Line> selectFeed(int start, int feedLimit, long memberId);
 
     int countFeedByUserId(long memberId);
+
+    String selectEmotionDetail(long emotionId);
 }

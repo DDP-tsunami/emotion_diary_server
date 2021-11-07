@@ -57,7 +57,7 @@ CREATE TABLE Notice (
     receive_id INT,
     send_id   INT,
     type  VARCHAR(20) NOT NULL,
-    status TINYINT(1) NOT NULL,
+    status TINYINT(1) DEFAULT false,
     date TIMESTAMP  DEFAULT NOW(),
     FOREIGN KEY (receive_id)
         REFERENCES Member(id) On DELETE CASCADE,

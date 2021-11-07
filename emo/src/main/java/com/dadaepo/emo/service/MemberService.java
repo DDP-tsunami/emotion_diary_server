@@ -1,8 +1,6 @@
 package com.dadaepo.emo.service;
 
-import com.dadaepo.emo.dto.member.Member;
-import com.dadaepo.emo.dto.member.MemberSignupRequest;
-import com.dadaepo.emo.dto.member.MemberUpdateRequest;
+import com.dadaepo.emo.dto.member.*;
 
 public interface MemberService {
     void signup(MemberSignupRequest request);
@@ -12,4 +10,6 @@ public interface MemberService {
     void updateProfile(MemberUpdateRequest request);
 
     Member getMyUserInfo();
+
+    MemberInfoResponse getUserByEmail(String email);
 }

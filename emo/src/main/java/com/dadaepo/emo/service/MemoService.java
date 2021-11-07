@@ -1,5 +1,6 @@
 package com.dadaepo.emo.service;
 
+import com.dadaepo.emo.dto.memo.EmotionDetailResponse;
 import com.dadaepo.emo.dto.memo.EmotionRequest;
 import com.dadaepo.emo.dto.memo.LineResponse;
 import com.dadaepo.emo.dto.memo.MemoResponse;
@@ -12,4 +13,6 @@ public interface MemoService {
     MemoResponse getMemoForMonth(String month);
 
     LineResponse getFeed(int start);
+
+    EmotionDetailResponse getEmotionDetail(long emotionId);
 }

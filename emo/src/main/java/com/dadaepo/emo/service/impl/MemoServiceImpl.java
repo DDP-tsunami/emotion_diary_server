@@ -3,10 +3,7 @@ package com.dadaepo.emo.service.impl;
 import com.dadaepo.emo.dao.MemberDao;
 import com.dadaepo.emo.dao.MemoDao;
 import com.dadaepo.emo.dto.member.Member;
-import com.dadaepo.emo.dto.memo.EmotionRequest;
-import com.dadaepo.emo.dto.memo.LineResponse;
-import com.dadaepo.emo.dto.memo.Memo;
-import com.dadaepo.emo.dto.memo.MemoResponse;
+import com.dadaepo.emo.dto.memo.*;
 import com.dadaepo.emo.service.MemoService;
 import com.dadaepo.emo.util.SecurityUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -65,6 +62,14 @@ public class MemoServiceImpl implements MemoService {
         lineResponse.setTotalCount(memoDao.countFeedByUserId(member.getId()));
 
         return lineResponse;
+    }
+
+    @Override
+    public EmotionDetailResponse getEmotionDetail(long emotionId) {
+        EmotionDetailResponse emotionDetailResponse = new EmotionDetailResponse();
+        emotionDetailResponse.setDetail(memoDao.selectEmotionDetail(emotionId));
+
+        return emotionDetailResponse;
     }
 
 }

@@ -74,6 +74,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
                 .and()
                 .authorizeRequests()
+                .antMatchers(AUTH_WHITELIST).permitAll()
                 .antMatchers("/api/authentication/**").permitAll()
                 .antMatchers("/api/user/signup").permitAll()
                 .antMatchers("/api/user/existence").permitAll()
@@ -83,9 +84,5 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .apply(new JwtSecurityConfig(tokenProvider));
     }
-    @Override
-    public void configure(WebSecurity webSecurity) throws Exception {
-        // 정적 파일 요청에 대해 무시
-        webSecurity.ignoring().antMatchers(AUTH_WHITELIST);
-    }
+
 }
