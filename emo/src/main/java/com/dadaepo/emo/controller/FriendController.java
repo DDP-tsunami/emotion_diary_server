@@ -3,6 +3,7 @@ package com.dadaepo.emo.controller;
 import com.dadaepo.emo.dto.friend.Friend;
 import com.dadaepo.emo.dto.friend.FriendRequest;
 import com.dadaepo.emo.dto.friend.FriendResponse;
+import com.dadaepo.emo.dto.notice.NoticeRequest;
 import com.dadaepo.emo.service.FriendService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -19,8 +20,15 @@ public class FriendController {
     @Autowired
     private FriendService friendService;
 
+    @ApiOperation(value = "친구 요청")
+    @PostMapping("/request")
+    public ResponseEntity<Object> sendFriendNotice(@RequestBody NoticeRequest noticeRequest) {
+        friendService.sendFriendNotice(noticeRequest);
+        return new ResponseEntity<>("success", HttpStatus.OK);
+    }
+
     @ApiOperation(value = "친구 수락")
-    @PostMapping("")
+    @PostMapping("/acceptance")
     public ResponseEntity<Object> acceptFriend(@RequestBody FriendRequest friendRequest) {
         friendService.acceptFriend(friendRequest);
         return new ResponseEntity<>("success", HttpStatus.OK);

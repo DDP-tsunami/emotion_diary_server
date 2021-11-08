@@ -2,10 +2,12 @@ package com.dadaepo.emo.service.impl;
 
 import com.dadaepo.emo.dao.FriendDao;
 import com.dadaepo.emo.dao.MemberDao;
+import com.dadaepo.emo.dao.NoticeDao;
 import com.dadaepo.emo.dto.friend.FriendRequest;
 import com.dadaepo.emo.dto.friend.FriendResponse;
 import com.dadaepo.emo.dto.member.Member;
 import com.dadaepo.emo.dto.member.MemberInfo;
+import com.dadaepo.emo.dto.notice.NoticeRequest;
 import com.dadaepo.emo.service.FriendService;
 import com.dadaepo.emo.util.SecurityUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -23,6 +25,20 @@ public class FriendServiceImpl implements FriendService {
 
     @Autowired
     private MemberDao memberDao;
+
+    @Autowired
+    private NoticeDao noticeDao;
+
+    @Override
+    public void sendFriendNotice(NoticeRequest noticeRequest) {
+        Member member = memberDao.selectUserByUserId(SecurityUtil.getCurrentUsername());
+        noticeRequest.setSendId(member.getId());
+
+        int insertNotice = noticeDao.insertNotice(noticeRequest);
+        if (insertNotice != 1) {
+            log.error("친구 알림 보내기를 실패하였습니다.");
+        }
+    }
 
     @Override
     public void acceptFriend(FriendRequest friendRequest) {
@@ -55,4 +71,5 @@ public class FriendServiceImpl implements FriendService {
             log.error("친구 삭제 중 에러가 발생하였습니다.");
         }
     }
+
 }

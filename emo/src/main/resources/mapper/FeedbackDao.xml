@@ -3,14 +3,14 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.dadaepo.emo.dao.FeedbackDao">
-    <insert id="insertReaction" parameterType="com.dadaepo.emo.dto.feedback.ReactionRequest">
+    <insert id="insertReaction">
         INSERT INTO feedback(
             member_id
             , memo_id
             , reaction
         )
         VALUES(
-            #{memberId}
+            #{sendId}
             , #{memoId}
             , #{reaction}
         )

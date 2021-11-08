@@ -1,6 +1,5 @@
 package com.dadaepo.emo.controller;
 
-import com.dadaepo.emo.dto.notice.NoticeRequest;
 import com.dadaepo.emo.dto.notice.NoticeResponse;
 import com.dadaepo.emo.service.NoticeService;
 import io.swagger.annotations.Api;
@@ -17,13 +16,6 @@ public class NoticeController {
 
     @Autowired
     private NoticeService noticeService;
-
-    @ApiOperation(value = "알림 보내기")
-    @PostMapping
-    public ResponseEntity<Object> sendNotice(@RequestBody NoticeRequest noticeRequest) {
-        noticeService.sendNotice(noticeRequest);
-        return new ResponseEntity<>("success", HttpStatus.OK);
-    }
 
     @ApiOperation(value = "알림 받기")
     @GetMapping
