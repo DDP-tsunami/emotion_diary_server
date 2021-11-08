@@ -15,4 +15,6 @@ public interface FriendDao {
     List<MemberInfo> selectFriends(long memberId);
 
     int deleteFriend(long deleteMemberId, long meId);
+
+    int deleteFriendNotice(long noticeId);
 }

@@ -9,4 +9,11 @@ public interface FeedbackService {
     void addReaction(ReactionRequest reactionRequest);
 
     ReactionResponse getReactions(long memoId);
+
+    @Transactional
+    void updateReaction(ReactionRequest reactionRequest);
+
+    void deleteReaction(int memoId);
+
+    int getReactionStatus(long memoId);
 }

@@ -16,6 +16,4 @@ public interface NoticeDao {
     int selectTotalCount(long memberId);
 
     int updateStatus(long noticeId);
-
-    int deleteNotice(long noticeId);
 }

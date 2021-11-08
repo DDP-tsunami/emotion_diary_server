@@ -11,6 +11,4 @@ public interface NoticeService {
     NoticeResponse getNotices(int start);
 
     void checkNotice(long noticeId);
-
-    void deleteNotice(long noticeId);
 }

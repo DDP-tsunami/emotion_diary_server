@@ -6,6 +6,7 @@ import com.dadaepo.emo.dto.notice.NoticeRequest;
 import org.springframework.transaction.annotation.Transactional;
 
 public interface FriendService {
+    @Transactional
     void acceptFriend(FriendRequest friendRequest);
 
     FriendResponse getFriends();
@@ -14,4 +15,6 @@ public interface FriendService {
 
     @Transactional
     void sendFriendNotice(NoticeRequest noticeRequest);
+
+    void deleteFriendNotice(long noticeId);
 }

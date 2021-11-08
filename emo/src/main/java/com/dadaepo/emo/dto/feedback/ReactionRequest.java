@@ -4,10 +4,13 @@ import com.dadaepo.emo.enums.NoticeType;
 import com.dadaepo.emo.enums.Reaction;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 @Setter
 @Getter
+@ToString
 public class ReactionRequest {
+    private long id;
 
     private long memoId;
     private Reaction reaction;

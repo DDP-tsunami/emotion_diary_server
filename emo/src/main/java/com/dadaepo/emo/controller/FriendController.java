@@ -1,6 +1,5 @@
 package com.dadaepo.emo.controller;
 
-import com.dadaepo.emo.dto.friend.Friend;
 import com.dadaepo.emo.dto.friend.FriendRequest;
 import com.dadaepo.emo.dto.friend.FriendResponse;
 import com.dadaepo.emo.dto.notice.NoticeRequest;
@@ -47,4 +46,10 @@ public class FriendController {
         return new ResponseEntity<>("success", HttpStatus.OK);
     }
 
+    @ApiOperation(value = "친구 거절")
+    @DeleteMapping("/refusal/{noticeId}")
+    public ResponseEntity<Object> refuseFriend(@PathVariable("noticeId") long noticeId) {
+        friendService.deleteFriendNotice(noticeId);
+        return new ResponseEntity<>("success", HttpStatus.OK);
+    }
 }

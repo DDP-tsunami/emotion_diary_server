@@ -42,4 +42,8 @@
         WHERE you_id = #{deleteMemberId}
             AND me_id = #{meId};
     </delete>
+    <delete id="deleteFriendNotice">
+        DELETE FROM notice
+        WHERE id = #{noticeId}
+    </delete>
 </mapper>

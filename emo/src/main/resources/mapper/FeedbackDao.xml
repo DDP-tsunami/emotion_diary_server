@@ -3,7 +3,8 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.dadaepo.emo.dao.FeedbackDao">
-    <insert id="insertReaction">
+    <insert id="insertReaction" parameterType="com.dadaepo.emo.dto.feedback.ReactionRequest"
+            useGeneratedKeys="true" keyProperty="id">
         INSERT INTO feedback(
             member_id
             , memo_id
@@ -13,6 +14,18 @@
             #{sendId}
             , #{memoId}
             , #{reaction}
+        )
+    </insert>
+    <insert id="insertReactionStatus" parameterType="com.dadaepo.emo.dto.feedback.ReactionRequest">
+        INSERT INTO reaction_status(
+            member_id
+            , memo_id
+            , reaction_id
+        )
+        VALUES(
+            #{reactionRequest.sendId}
+            , #{reactionRequest.memoId}
+            , #{reactionId}
         )
     </insert>
     <select id="selectReactions" resultType="com.dadaepo.emo.dto.feedback.ReactionInfo">
@@ -31,4 +44,27 @@
         WHERE memo_id = #{memoId}
         GROUP BY reaction
     </select>
+    <select id="selectReactionStatus" resultType="int">
+        SELECT IFNULL(status, 0)
+        FROM reaction_status
+        WHERE memo_id = #{memoId}
+            AND member_id = #{sendId}
+    </select>
+    <update id="updateReaction">
+        UPDATE feedback
+        SET reaction = #{reaction}
+        WHERE memo_id = #{memoId}
+            AND member_id = #{sendId}
+    </update>
+    <update id="updateStatus">
+        UPDATE reaction_status
+        SET status = if(status=1, 2, 1)
+        WHERE memo_id = #{memoId}
+            AND member_id = #{sendId}
+    </update>
+    <delete id="deleteReaction">
+        DELETE FROM feedback
+        WHERE memo_id = #{memoId}
+            AND member_id = #{sendId}
+    </delete>
 </mapper>

@@ -2,8 +2,10 @@ package com.dadaepo.emo.service.impl;
 
 import com.dadaepo.emo.dao.MemberDao;
 import com.dadaepo.emo.dto.member.*;
+import com.dadaepo.emo.enums.NoticeType;
 import com.dadaepo.emo.enums.Role;
 import com.dadaepo.emo.service.MemberService;
+import com.dadaepo.emo.util.SecurityUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -65,13 +67,13 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public MemberInfoResponse getUserByEmail(String email) {
-
+        Member member = memberDao.selectUserByUserId(SecurityUtil.getCurrentUsername());
         MemberInfoResponse memberInfos = new MemberInfoResponse();
 
         if(email.equals("")) {
             return memberInfos;
         }
-        memberInfos.setMemberInfoList(memberDao.selectUserByEmail(email));
+        memberInfos.setMemberInfoList(memberDao.selectUserByEmail(email, member.getId(), NoticeType.FRIEND_REQUEST));
 
         return memberInfos;
     }

@@ -36,8 +36,5 @@
         SET status = true
         WHERE id = #{noticeId}
     </update>
-    <delete id="deleteNotice">
-        DELETE FROM notice
-        WHERE id = #{noticeId}
-    </delete>
+
 </mapper>

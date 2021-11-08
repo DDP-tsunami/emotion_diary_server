@@ -1,5 +1,5 @@
 package com.dadaepo.emo.enums;
 
 public enum NoticeType {
-    friend, reaction
+    FRIEND_REQUEST, REACTION, FRIEND_RESPONSE, friend
 }

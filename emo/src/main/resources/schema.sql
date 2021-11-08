@@ -1,5 +1,5 @@
 DROP TABLE IF EXISTS Token;
-DROP TABLE IF EXISTS Persistent_logins;
+DROP TABLE IF EXISTS Reaction_status;
 DROP TABLE IF EXISTS Notice;
 DROP TABLE IF EXISTS Friend;
 DROP TABLE IF EXISTS Feedback;
@@ -65,10 +65,18 @@ CREATE TABLE Notice (
         REFERENCES Member(id) On DELETE CASCADE
 );
 
-CREATE TABLE Persistent_logins (
-    id int PRIMARY KEY AUTO_INCREMENT,
-    username text NOT NULL,
-    token text NOT NULL,
-    last_used TIMESTAMP NOT NULL
+CREATE TABLE reaction_status (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    reaction_id INT,
+    memo_id INT,
+    member_id INT,
+    status TINYINT(10) DEFAULT 1,
+    FOREIGN KEY (reaction_id)
+            REFERENCES feedback(id) ON DELETE CASCADE,
+    FOREIGN KEY (member_id)
+        REFERENCES member(id) ON DELETE CASCADE,
+    FOREIGN KEY (memo_id)
+        REFERENCES memo(id) ON DELETE CASCADE
 );
+
 

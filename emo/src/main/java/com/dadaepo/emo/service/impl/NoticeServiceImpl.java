@@ -56,12 +56,4 @@ public class NoticeServiceImpl implements NoticeService {
             log.error("알림 확인 업데이트를 실패하였습니다.");
         }
     }
-
-    @Override
-    public void deleteNotice(long noticeId) {
-        int deleteNotice = noticeDao.deleteNotice(noticeId);
-        if (deleteNotice != 1) {
-            log.error("알림 삭제를 실패하였습니다.");
-        }
-    }
 }

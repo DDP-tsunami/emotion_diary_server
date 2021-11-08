@@ -29,11 +29,4 @@ public class NoticeController {
         noticeService.checkNotice(noticeId);
         return new ResponseEntity<>("success", HttpStatus.OK);
     }
-
-    @ApiOperation(value = "알림 삭제")
-    @DeleteMapping("/{noticeId}")
-    public ResponseEntity<Object> deleteNotice(@PathVariable("noticeId") long noticeId) {
-        noticeService.deleteNotice(noticeId);
-        return new ResponseEntity<>("success", HttpStatus.OK);
-    }
 }

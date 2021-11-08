@@ -8,6 +8,7 @@ import com.dadaepo.emo.dto.friend.FriendResponse;
 import com.dadaepo.emo.dto.member.Member;
 import com.dadaepo.emo.dto.member.MemberInfo;
 import com.dadaepo.emo.dto.notice.NoticeRequest;
+import com.dadaepo.emo.enums.NoticeType;
 import com.dadaepo.emo.service.FriendService;
 import com.dadaepo.emo.util.SecurityUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -33,10 +34,19 @@ public class FriendServiceImpl implements FriendService {
     public void sendFriendNotice(NoticeRequest noticeRequest) {
         Member member = memberDao.selectUserByUserId(SecurityUtil.getCurrentUsername());
         noticeRequest.setSendId(member.getId());
+        noticeRequest.setType(NoticeType.FRIEND_REQUEST);
 
         int insertNotice = noticeDao.insertNotice(noticeRequest);
         if (insertNotice != 1) {
             log.error("친구 알림 보내기를 실패하였습니다.");
+        }
+    }
+
+    @Override
+    public void deleteFriendNotice(long noticeId) {
+        int deleteFriendNotice = friendDao.deleteFriendNotice(noticeId);
+        if (deleteFriendNotice != 1) {
+            log.error("친구 (거절/요청 삭제) 중 에러가 발생하였습니다.");
         }
     }
 
@@ -48,6 +58,29 @@ public class FriendServiceImpl implements FriendService {
         if (insertFriend != 1) {
             log.error("친구 등록 중 에러가 발생하였습니다.");
         }
+
+        NoticeRequest sendNoticeRequest = new NoticeRequest();
+        sendNoticeRequest.setReceiveId(friendRequest.getYouId());
+        sendNoticeRequest.setSendId(member.getId());
+        sendNoticeRequest.setType(NoticeType.FRIEND_RESPONSE);
+
+        int insertNotice = noticeDao.insertNotice(sendNoticeRequest);
+        if (insertNotice != 1) {
+            log.error("친구 수락 알림 보내기를 실패하였습니다.");
+        }
+
+        NoticeRequest receiveNoticeRequest = new NoticeRequest();
+        receiveNoticeRequest.setReceiveId(member.getId());
+        receiveNoticeRequest.setSendId(friendRequest.getYouId());
+        receiveNoticeRequest.setType(NoticeType.FRIEND_RESPONSE);
+
+        insertNotice = noticeDao.insertNotice(receiveNoticeRequest);
+        if (insertNotice != 1) {
+            log.error("친구 수락 알림 보내기를 실패하였습니다.");
+        }
+
+        deleteFriendNotice(friendRequest.getNoticeId());
+
     }
 
     @Override
