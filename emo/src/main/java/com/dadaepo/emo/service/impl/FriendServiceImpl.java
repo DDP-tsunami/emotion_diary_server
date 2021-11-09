@@ -51,9 +51,14 @@ public class FriendServiceImpl implements FriendService {
     }
 
     @Override
-    public void acceptFriend(FriendRequest friendRequest) {
+    public boolean acceptFriend(FriendRequest friendRequest) {
         Member member = memberDao.selectUserByUserId(SecurityUtil.getCurrentUsername());
         friendRequest.setMeId(member.getId());
+
+        if(friendDao.isFriend(friendRequest.getMeId(), friendRequest.getYouId()) != null) {
+            log.info("이미 친구입니다!");
+            return false;
+        }
         int insertFriend = friendDao.insertFriend(friendRequest);
         if (insertFriend != 1) {
             log.error("친구 등록 중 에러가 발생하였습니다.");
@@ -81,6 +86,7 @@ public class FriendServiceImpl implements FriendService {
 
         deleteFriendNotice(friendRequest.getNoticeId());
 
+        return true;
     }
 
     @Override

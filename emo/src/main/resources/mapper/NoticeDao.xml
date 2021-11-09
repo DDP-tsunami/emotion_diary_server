@@ -41,7 +41,7 @@
         LIMIT #{start}, #{limit}
     </select>
     <select id="selectReactionNotices" resultType="com.dadaepo.emo.dto.notice.NoticeInfo" >
-        SELECT id
+        SELECT IFNULL(id, 0)
         , type
         , status
         , date

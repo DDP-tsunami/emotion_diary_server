@@ -29,8 +29,7 @@ public class FriendController {
     @ApiOperation(value = "친구 수락")
     @PostMapping("/acceptance")
     public ResponseEntity<Object> acceptFriend(@RequestBody FriendRequest friendRequest) {
-        friendService.acceptFriend(friendRequest);
-        return new ResponseEntity<>("success", HttpStatus.OK);
+        return new ResponseEntity<>(friendService.acceptFriend(friendRequest), HttpStatus.OK);
     }
 
     @ApiOperation(value = "친구 목록 받기")

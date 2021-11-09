@@ -7,7 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 public interface FriendService {
     @Transactional
-    void acceptFriend(FriendRequest friendRequest);
+    boolean acceptFriend(FriendRequest friendRequest);
 
     FriendResponse getFriends();
 

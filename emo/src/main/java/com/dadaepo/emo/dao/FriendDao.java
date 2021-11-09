@@ -17,4 +17,6 @@ public interface FriendDao {
     int deleteFriend(long deleteMemberId, long meId);
 
     int deleteFriendNotice(long noticeId);
+
+    Long isFriend(long meId, long youId);
 }

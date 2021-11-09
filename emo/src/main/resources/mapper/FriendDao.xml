@@ -34,6 +34,12 @@
             ON member.id = you_id
         WHERE me_id = #{memberId}
     </select>
+    <select id="isFriend" resultType="Long">
+        SELECT id
+        FROM friend
+        WHERE me_id = #{meId}
+            AND you_id = #{youId}
+    </select>
     <delete id="deleteFriend">
         DELETE FROM friend
         WHERE me_id = #{deleteMemberId}
