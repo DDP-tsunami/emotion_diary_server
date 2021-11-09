@@ -1,14 +1,11 @@
 package com.dadaepo.emo.service;
 
-import com.dadaepo.emo.dto.notice.NoticeRequest;
 import com.dadaepo.emo.dto.notice.NoticeResponse;
+import com.dadaepo.emo.enums.NoticeType;
 
 public interface NoticeService {
-    int NOTICE_LIMIT = 10;
+    int NOTICE_LIMIT = 5;
 
-    void sendNotice(NoticeRequest noticeRequest);
+    NoticeResponse getNotices(int start, NoticeType noticeType);
 
-    NoticeResponse getNotices(int start);
-
-    void checkNotice(long noticeId);
 }

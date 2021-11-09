@@ -1,9 +1,9 @@
 package com.dadaepo.emo.dao;
 
+import com.dadaepo.emo.dto.feedback.MyReactionResponse;
 import com.dadaepo.emo.dto.feedback.ReactionInfo;
 import com.dadaepo.emo.dto.feedback.ReactionRequest;
 import com.dadaepo.emo.enums.Reaction;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -16,13 +16,10 @@ public interface FeedbackDao {
 
     List<Integer> selectCountReactionByType(long memoId);
 
-    int insertReactionStatus(long reactionId, ReactionRequest reactionRequest);
+    MyReactionResponse selectMyReactionStatus(long memoId, long sendId);
 
-    int updateReaction(long memoId, Reaction reaction, long sendId);
+    int updateReaction(Reaction reaction, long reactionId);
 
-    int updateStatus(long memoId, long sendId);
+    int cancelReaction(long reactionId);
 
-    int deleteReaction(long memoId, long sendId);
-
-    int selectReactionStatus(long memoId, long sendId);
 }

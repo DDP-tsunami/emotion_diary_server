@@ -3,8 +3,8 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.dadaepo.emo.dao.NoticeDao">
-    <insert id="insertNotice" parameterType="com.dadaepo.emo.dto.notice.NoticeRequest">
-        INSERT INTO notice(
+    <insert id="insertFriendNotice" parameterType="com.dadaepo.emo.dto.notice.NoticeRequest">
+        INSERT INTO friend_notice(
             send_id
         , receive_id
         , type
@@ -15,26 +15,64 @@
         , #{type}
         )
     </insert>
-    <select id="selectNotices" resultType="com.dadaepo.emo.dto.notice.NoticeInfo" >
+    <insert id="insertReactionNotice" parameterType="com.dadaepo.emo.dto.notice.NoticeRequest">
+        INSERT INTO reaction_notice(
+        send_id
+        , receive_id
+        , type
+        , reaction_id
+        )
+        Values(
+        #{noticeRequest.sendId}
+        , #{noticeRequest.receiveId}
+        , #{noticeRequest.type}
+        , #{reactionId}
+        )
+    </insert>
+    <select id="selectFriendNotices" resultType="com.dadaepo.emo.dto.notice.NoticeInfo" >
         SELECT id
             , type
             , status
             , date
             , send_id AS sendId
-        FROM notice
+        FROM friend_notice
         WHERE receive_id = #{memberId}
         ORDER BY date DESC
         LIMIT #{start}, #{limit}
     </select>
-    <select id="selectTotalCount" resultType="int">
+    <select id="selectReactionNotices" resultType="com.dadaepo.emo.dto.notice.NoticeInfo" >
+        SELECT id
+        , type
+        , status
+        , date
+        , send_id AS sendId
+        FROM reaction_notice
+        WHERE receive_id = #{memberId}
+        ORDER BY date DESC
+        LIMIT #{start}, #{limit}
+    </select>
+    <select id="selectTotalCountFriendNotice" resultType="int">
         SELECT COUNT(*)
-        FROM notice
+        FROM friend_notice
         WHERE receive_id = #{memberId}
     </select>
-    <update id="updateStatus">
-        UPDATE notice
+    <select id="selectTotalCountReactionNotice" resultType="int">
+        SELECT COUNT(*)
+        FROM reaction_notice
+        WHERE receive_id = #{memberId}
+    </select>
+    <update id="updateFriendNoticeStatus">
+        UPDATE friend_notice
         SET status = true
         WHERE id = #{noticeId}
     </update>
-
+    <update id="updateReactionNoticeStatus">
+        UPDATE reaction_notice
+        SET status = true
+        WHERE id = #{noticeId}
+    </update>
+    <delete id="deleteReactionNotice">
+        DELETE FROM reaction_notice
+        WHERE reaction_id = #{reactionId}
+    </delete>
 </mapper>

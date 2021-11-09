@@ -59,16 +59,16 @@
                 WHERE friend.me_id = #{memberId}
             )
             AND member.id NOT IN (
-                SELECT DISTINCT notice.send_id
-                FROM notice
-                WHERE notice.receive_id = #{memberId}
-                    AND notice.type = #{noticeType}
+                SELECT DISTINCT friend_notice.send_id
+                FROM friend_notice
+                WHERE friend_notice.receive_id = #{memberId}
+                    AND friend_notice.type = #{noticeType}
             )
             AND member.id NOT IN(
-                SELECT DISTINCT notice.receive_id
-                FROM notice
-                WHERE notice.send_id = #{memberId}
-                    AND notice.type = #{noticeType}
+                SELECT DISTINCT friend_notice.receive_id
+                FROM friend_notice
+                WHERE friend_notice.send_id = #{memberId}
+                    AND friend_notice.type = #{noticeType}
             )
     </select>
     <update id="updateProfile" parameterType="com.dadaepo.emo.dto.member.MemberUpdateRequest">

@@ -1,5 +1,6 @@
 package com.dadaepo.emo.service;
 
+import com.dadaepo.emo.dto.feedback.MyReactionResponse;
 import com.dadaepo.emo.dto.feedback.ReactionRequest;
 import com.dadaepo.emo.dto.feedback.ReactionResponse;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,7 +14,8 @@ public interface FeedbackService {
     @Transactional
     void updateReaction(ReactionRequest reactionRequest);
 
-    void deleteReaction(int memoId);
+    @Transactional
+    void deleteReaction(long reactionId);
 
-    int getReactionStatus(long memoId);
+    MyReactionResponse getMyReactionStatus(long memoId);
 }

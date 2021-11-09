@@ -1,5 +1,6 @@
 package com.dadaepo.emo.controller;
 
+import com.dadaepo.emo.dto.feedback.MyReactionResponse;
 import com.dadaepo.emo.dto.feedback.ReactionRequest;
 import com.dadaepo.emo.dto.feedback.ReactionResponse;
 import com.dadaepo.emo.service.FeedbackService;
@@ -37,16 +38,15 @@ public class FeedbackController {
     }
 
     @ApiOperation("반응 취소")
-    @DeleteMapping("/{memoId}")
-    public ResponseEntity<Object> deleteReaction(@PathVariable("memoId") int memoId) {
-        feedbackService.deleteReaction(memoId);
+    @PutMapping("/{reactionId}")
+    public ResponseEntity<Object> deleteReaction(@PathVariable("reactionId") int reactionId) {
+        feedbackService.deleteReaction(reactionId);
         return new ResponseEntity<>("success", HttpStatus.OK);
     }
 
-    @ApiOperation(value = "반응 상태 확인", notes = "0 : 반응 한적 없음, 1 : 반응 상태, 2 : 반응 취소 상태")
-    @GetMapping(value = "/status/{memoId}")
-    public ResponseEntity<Object> getReactionStatus(@PathVariable("memoId") long memoId) {
-        int status = feedbackService.getReactionStatus(memoId);
-        return new ResponseEntity<>(status, HttpStatus.OK);
+    @ApiOperation(value = "내 반응 확인", notes = "null : 반응 한적 없음 /status 0 : 반응 취소 상태, 1 : 반응 상태")
+    @GetMapping(value = "/myReaction/{memoId}")
+    public ResponseEntity<MyReactionResponse> getMyReactionStatus(@PathVariable("memoId") long memoId) {
+        return ResponseEntity.ok(feedbackService.getMyReactionStatus(memoId));
     }
 }

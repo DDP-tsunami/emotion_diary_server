@@ -10,7 +10,7 @@ import lombok.ToString;
 @Getter
 @ToString
 public class ReactionRequest {
-    private long id;
+    private long reactionId;
 
     private long memoId;
     private Reaction reaction;

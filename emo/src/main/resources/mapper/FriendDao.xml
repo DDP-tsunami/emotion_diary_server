@@ -43,7 +43,7 @@
             AND me_id = #{meId};
     </delete>
     <delete id="deleteFriendNotice">
-        DELETE FROM notice
+        DELETE FROM friend_notice
         WHERE id = #{noticeId}
     </delete>
 </mapper>

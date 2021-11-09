@@ -1,6 +1,5 @@
-DROP TABLE IF EXISTS Token;
-DROP TABLE IF EXISTS Reaction_status;
-DROP TABLE IF EXISTS Notice;
+DROP TABLE IF EXISTS Reaction_Notice;
+DROP TABLE IF EXISTS friend_Notice;
 DROP TABLE IF EXISTS Friend;
 DROP TABLE IF EXISTS Feedback;
 DROP TABLE IF EXISTS Memo;
@@ -34,8 +33,9 @@ CREATE TABLE Feedback (
     id        INT          PRIMARY KEY AUTO_INCREMENT,
     member_id INT,
     memo_id   INT,
-    reaction  VARCHAR(100) NOT NULL,
+    reaction  VARCHAR(100) ,
     date TIMESTAMP  DEFAULT NOW(),
+    status    TINYINT(1) DEFAULT true,
     FOREIGN KEY (member_id)
         REFERENCES Member(id) On DELETE CASCADE,
     FOREIGN KEY (memo_id)
@@ -52,7 +52,7 @@ CREATE TABLE Friend (
         REFERENCES Member(id) On DELETE CASCADE
 );
 
-CREATE TABLE Notice (
+CREATE TABLE Friend_Notice (
     id      INT          PRIMARY KEY AUTO_INCREMENT,
     receive_id INT,
     send_id   INT,
@@ -65,18 +65,33 @@ CREATE TABLE Notice (
         REFERENCES Member(id) On DELETE CASCADE
 );
 
-CREATE TABLE reaction_status (
-    id INT PRIMARY KEY AUTO_INCREMENT,
+CREATE TABLE Reaction_Notice (
+    id      INT          PRIMARY KEY AUTO_INCREMENT,
+    receive_id INT,
+    send_id   INT,
     reaction_id INT,
-    memo_id INT,
-    member_id INT,
-    status TINYINT(10) DEFAULT 1,
+    type  VARCHAR(20) NOT NULL,
+    status TINYINT(1) DEFAULT false,
+    date TIMESTAMP  DEFAULT NOW(),
     FOREIGN KEY (reaction_id)
-            REFERENCES feedback(id) ON DELETE CASCADE,
-    FOREIGN KEY (member_id)
-        REFERENCES member(id) ON DELETE CASCADE,
-    FOREIGN KEY (memo_id)
-        REFERENCES memo(id) ON DELETE CASCADE
+        REFERENCES Feedback(id) On DELETE CASCADE,
+    FOREIGN KEY (receive_id)
+        REFERENCES Member(id) On DELETE CASCADE,
+    FOREIGN KEY (send_id)
+        REFERENCES Member(id) On DELETE CASCADE
 );
+--CREATE TABLE reaction_status (
+--    id INT PRIMARY KEY AUTO_INCREMENT,
+--    reaction_id INT,
+--    memo_id INT,
+--    member_id INT,
+--    status TINYINT(10) DEFAULT 1,
+--    FOREIGN KEY (reaction_id)
+--            REFERENCES feedback(id) ON DELETE CASCADE,
+--    FOREIGN KEY (member_id)
+--        REFERENCES member(id) ON DELETE CASCADE,
+--    FOREIGN KEY (memo_id)
+--        REFERENCES memo(id) ON DELETE CASCADE
+--);
 
 

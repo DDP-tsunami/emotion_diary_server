@@ -3,6 +3,7 @@ package com.dadaepo.emo.service.impl;
 import com.dadaepo.emo.dao.FeedbackDao;
 import com.dadaepo.emo.dao.MemberDao;
 import com.dadaepo.emo.dao.NoticeDao;
+import com.dadaepo.emo.dto.feedback.MyReactionResponse;
 import com.dadaepo.emo.dto.feedback.ReactionRequest;
 import com.dadaepo.emo.dto.feedback.ReactionResponse;
 import com.dadaepo.emo.dto.member.Member;
@@ -39,18 +40,11 @@ public class FeedbackServiceImpl implements FeedbackService {
             log.error("리액션 등록에 실패하였습니다.");
         }
 
-        long reactionId = reactionRequest.getId();
-
-        int insertStatus = feedbackDao.insertReactionStatus(reactionId, reactionRequest);
-        if (insertStatus != 1) {
-            log.error("리액션 상태 등록에 실패하였습니다.");
-        }
-
         noticeRequest.setSendId(reactionRequest.getSendId());
         noticeRequest.setReceiveId(reactionRequest.getReceiveId());
         noticeRequest.setType(NoticeType.REACTION);
 
-        int insertNotice = noticeDao.insertNotice(noticeRequest);
+        int insertNotice = noticeDao.insertReactionNotice(noticeRequest, reactionRequest.getReactionId());
         if (insertNotice != 1) {
             log.error("리액션 알림 보내기를 실패하였습니다.");
         }
@@ -67,35 +61,44 @@ public class FeedbackServiceImpl implements FeedbackService {
     @Override
     public void updateReaction(ReactionRequest reactionRequest) {
         Member member = memberDao.selectUserByUserId(SecurityUtil.getCurrentUsername());
-        reactionRequest.setSendId(member.getId());
+        NoticeRequest noticeRequest = new NoticeRequest();
 
-        int updateReaction = feedbackDao.updateReaction(reactionRequest.getMemoId(), reactionRequest.getReaction(), reactionRequest.getSendId());
+        int deleteReactionNotice = noticeDao.deleteReactionNotice(reactionRequest.getReactionId());
+        if (deleteReactionNotice != 1) {
+            log.error("리액션 알림 삭제에 실패하였습니다.");
+        }
+
+        int updateReaction = feedbackDao.updateReaction(reactionRequest.getReaction(), reactionRequest.getReactionId());
         if (updateReaction != 1) {
             log.error("리액션 수정에 실패하였습니다.");
         }
+
+        noticeRequest.setSendId(member.getId());
+        noticeRequest.setReceiveId(reactionRequest.getReceiveId());
+        noticeRequest.setType(NoticeType.REACTION);
+
+        int insertReactionNotice = noticeDao.insertReactionNotice(noticeRequest, reactionRequest.getReactionId());
+        if (insertReactionNotice != 1) {
+            log.error("리액션 알림 등록에 실패하였습니다.");
+        }
     }
 
     @Override
-    public void deleteReaction(int memoId) {
-        Member member = memberDao.selectUserByUserId(SecurityUtil.getCurrentUsername());
-
-        int deleteReaction = feedbackDao.deleteReaction(memoId, member.getId());
-        if (deleteReaction != 1) {
-            log.error("리액션 삭제에 실패하였습니다.");
+    public void deleteReaction(long reactionId) {
+        int deleteReactionNotice = noticeDao.deleteReactionNotice(reactionId);
+        if (deleteReactionNotice != 1) {
+            log.error("리액션 알림 삭제에 실패하였습니다.");
         }
 
-        int updateStatus = feedbackDao.updateStatus(memoId, member.getId());
+        int updateStatus = feedbackDao.cancelReaction(reactionId);
         if (updateStatus != 1) {
-            log.error("리액션 상태 변경에 실패하였습니다.");
+            log.error("리액션 취소에 실패하였습니다.");
         }
     }
 
     @Override
-    public int getReactionStatus(long memoId) {
+    public MyReactionResponse getMyReactionStatus(long memoId) {
         Member member = memberDao.selectUserByUserId(SecurityUtil.getCurrentUsername());
-
-        return
-
-                feedbackDao.selectReactionStatus(memoId, member.getId());
+        return feedbackDao.selectMyReactionStatus(memoId, member.getId());
     }
 }

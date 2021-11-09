@@ -36,7 +36,7 @@ public class FriendServiceImpl implements FriendService {
         noticeRequest.setSendId(member.getId());
         noticeRequest.setType(NoticeType.FRIEND_REQUEST);
 
-        int insertNotice = noticeDao.insertNotice(noticeRequest);
+        int insertNotice = noticeDao.insertFriendNotice(noticeRequest);
         if (insertNotice != 1) {
             log.error("친구 알림 보내기를 실패하였습니다.");
         }
@@ -64,7 +64,7 @@ public class FriendServiceImpl implements FriendService {
         sendNoticeRequest.setSendId(member.getId());
         sendNoticeRequest.setType(NoticeType.FRIEND_RESPONSE);
 
-        int insertNotice = noticeDao.insertNotice(sendNoticeRequest);
+        int insertNotice = noticeDao.insertFriendNotice(sendNoticeRequest);
         if (insertNotice != 1) {
             log.error("친구 수락 알림 보내기를 실패하였습니다.");
         }
@@ -74,7 +74,7 @@ public class FriendServiceImpl implements FriendService {
         receiveNoticeRequest.setSendId(friendRequest.getYouId());
         receiveNoticeRequest.setType(NoticeType.FRIEND_RESPONSE);
 
-        insertNotice = noticeDao.insertNotice(receiveNoticeRequest);
+        insertNotice = noticeDao.insertFriendNotice(receiveNoticeRequest);
         if (insertNotice != 1) {
             log.error("친구 수락 알림 보내기를 실패하였습니다.");
         }
