@@ -9,4 +9,5 @@ public class ReactionInfo {
     private String photoUrl;
     private String name;
     private String nickname;
+    private long id;
 }

@@ -1,11 +1,11 @@
-DROP TABLE IF EXISTS Reaction_Notice;
+DROP TABLE IF EXISTS Reaction_Notice;z
 DROP TABLE IF EXISTS friend_Notice;
 DROP TABLE IF EXISTS Friend;
 DROP TABLE IF EXISTS Feedback;
 DROP TABLE IF EXISTS Memo;
 DROP TABLE IF EXISTS Member;
 
-CREATE TABLE Member (
+CREATE TABLESPACE Member (
     id      INT          PRIMARY KEY AUTO_INCREMENT,
     user_id VARCHAR(100),
     email   VARCHAR(255) NOT NULL,
@@ -80,18 +80,5 @@ CREATE TABLE Reaction_Notice (
     FOREIGN KEY (send_id)
         REFERENCES Member(id) On DELETE CASCADE
 );
---CREATE TABLE reaction_status (
---    id INT PRIMARY KEY AUTO_INCREMENT,
---    reaction_id INT,
---    memo_id INT,
---    member_id INT,
---    status TINYINT(10) DEFAULT 1,
---    FOREIGN KEY (reaction_id)
---            REFERENCES feedback(id) ON DELETE CASCADE,
---    FOREIGN KEY (member_id)
---        REFERENCES member(id) ON DELETE CASCADE,
---    FOREIGN KEY (memo_id)
---        REFERENCES memo(id) ON DELETE CASCADE
---);
 
 

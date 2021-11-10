@@ -22,6 +22,7 @@
         , profile_photo_url AS photoURl
         , name
         , nickname
+        , feedback.id
         FROM feedback
         INNER JOIN member
             ON feedback.member_id = member.id
