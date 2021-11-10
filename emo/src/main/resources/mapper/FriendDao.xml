@@ -8,18 +8,8 @@
             me_id
             , you_id
         )
-        Values(
-            #{meId}
-            , #{youId}
-        );
-        INSERT INTO friend(
-            me_id
-            , you_id
-        )
-        Values(
-            #{youId}
-            , #{meId}
-        )
+        Values( #{meId}, #{youId}),
+        ( #{youId}, #{meId})
     </insert>
     <select id="selectFriends" resultType="com.dadaepo.emo.dto.member.MemberInfo" >
         SELECT member.id
@@ -42,11 +32,10 @@
     </select>
     <delete id="deleteFriend">
         DELETE FROM friend
-        WHERE me_id = #{deleteMemberId}
-            AND you_id = #{meId};
-        DELETE FROM friend
-        WHERE you_id = #{deleteMemberId}
-            AND me_id = #{meId};
+        WHERE (me_id = #{deleteMemberId}
+            AND you_id = #{meId} )OR
+            (you_id = #{deleteMemberId}
+            AND me_id = #{meId});
     </delete>
     <delete id="deleteFriendNotice">
         DELETE FROM friend_notice
