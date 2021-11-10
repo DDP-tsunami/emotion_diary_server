@@ -38,7 +38,7 @@ public class FeedbackController {
     }
 
     @ApiOperation("반응 취소")
-    @PutMapping("/{reactionId}")
+    @DeleteMapping("/{reactionId}")
     public ResponseEntity<Object> deleteReaction(@PathVariable("reactionId") int reactionId) {
         feedbackService.deleteReaction(reactionId);
         return new ResponseEntity<>("success", HttpStatus.OK);
