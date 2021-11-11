@@ -7,9 +7,6 @@ build/
 ../db/
 ../emo_diary_key.ppk
 
-### application ###
-!**/src/**/application.yml
-
 ### STS ###
 .apt_generated
 .classpath

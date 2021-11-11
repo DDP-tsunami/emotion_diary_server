@@ -91,10 +91,10 @@
     <update id="updateMemoToday" parameterType="com.dadaepo.emo.dto.memo.EmotionRequest">
         UPDATE memo
         SET
-        , emotion = #{emotionRequest.emotion}
+         emotion = #{emotionRequest.emotion}
         , emotion_scope = #{emotionRequest.emotionScope}
         , detail = #{emotionRequest.detail}
         , detail_scope = #{emotionRequest.detailScope}
-        WHERE memo_id = #{memoId}
+        WHERE id = #{memoId}
     </update>
 </mapper>
