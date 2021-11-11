@@ -16,5 +16,7 @@ public interface MemoService {
 
     EmotionDetailResponse getEmotionDetail(long emotionId);
 
-    MemoResponse getEmotionToday();
+    MemoResponse getEmotionToday() throws BusinessException;
+
+    void updateMemoToday(EmotionRequest emotionRequest, long memoId) throws BusinessException;
 }

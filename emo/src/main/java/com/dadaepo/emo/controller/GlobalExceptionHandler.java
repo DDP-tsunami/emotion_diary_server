@@ -42,7 +42,7 @@ public class GlobalExceptionHandler {
     }
 
     /**
-     * un
+     * @NotEmpty 으로 발생한 경우
      */
     @ExceptionHandler(UnexpectedTypeException.class)
     protected ResponseEntity<ErrorResponse> handleUnexpectedTypeException(UnexpectedTypeException e) {

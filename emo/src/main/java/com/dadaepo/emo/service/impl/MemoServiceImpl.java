@@ -40,6 +40,7 @@ public class MemoServiceImpl implements MemoService {
         int insertMemo = memoDao.insertMemo(emotionRequest);
         if(insertMemo != 1) {
             log.error("감정 등록에 실패하였습니다.");
+            throw new BusinessException();
         }
     }
 
@@ -84,7 +85,7 @@ public class MemoServiceImpl implements MemoService {
     }
 
     @Override
-    public MemoResponse getEmotionToday() {
+    public MemoResponse getEmotionToday() throws BusinessException {
         Member member = memberDao.selectUserByUserId(SecurityUtil.getCurrentUsername());
         MemoResponse memoResponse = new MemoResponse();
         List<Memo> emotionToday = memoDao.selectMemoToday(member.getId(), DateUtil.getToday().toString(), DateUtil.getToday().plusDays(1).toString());
@@ -94,10 +95,20 @@ public class MemoServiceImpl implements MemoService {
 
         if(memoResponse.getTotalCount() < 0 || memoResponse.getTotalCount() > 1) {
             log.error("잘못된 값을 가져왔습니다.");
-            return null;
+            throw new BusinessException();
         }
 
         return memoResponse;
+    }
+
+    @Override
+    public void updateMemoToday(EmotionRequest emotionRequest, long memoId) throws BusinessException {
+
+        int updateMemo = memoDao.updateMemoToday(emotionRequest, memoId);
+        if(updateMemo != 1) {
+            log.error("오늘 감정 수정에 실패하였습니다.");
+            throw new BusinessException();
+        }
     }
 
 }

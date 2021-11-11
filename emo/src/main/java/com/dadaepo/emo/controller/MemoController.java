@@ -45,7 +45,14 @@ public class MemoController {
 
     @ApiOperation(value = "오늘 등록된 감정 받아오기")
     @GetMapping("/today")
-    public ResponseEntity<MemoResponse> getEmotionToday() {
+    public ResponseEntity<MemoResponse> getEmotionToday() throws BusinessException {
         return ResponseEntity.ok(memoService.getEmotionToday());
+    }
+
+    @ApiOperation(value = "오늘 감정 수정")
+    @PutMapping("/today/{memoId}")
+    public ResponseEntity<Object> updateMemoToday(@RequestBody EmotionRequest emotionRequest, @PathVariable("memoId") long memoId) throws BusinessException {
+        memoService.updateMemoToday(emotionRequest, memoId);
+        return new ResponseEntity<>("success", HttpStatus.OK);
     }
 }

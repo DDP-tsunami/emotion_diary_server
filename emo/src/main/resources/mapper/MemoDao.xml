@@ -88,4 +88,13 @@
             AND memo.date <![CDATA[ < ]]> '${tomorrow} 00:00:00'
             AND member_id = #{memberId}
     </select>
+    <update id="updateMemoToday" parameterType="com.dadaepo.emo.dto.memo.EmotionRequest">
+        UPDATE memo
+        SET
+        , emotion = #{emotionRequest.emotion}
+        , emotion_scope = #{emotionRequest.emotionScope}
+        , detail = #{emotionRequest.detail}
+        , detail_scope = #{emotionRequest.detailScope}
+        WHERE memo_id = #{memoId}
+    </update>
 </mapper>
