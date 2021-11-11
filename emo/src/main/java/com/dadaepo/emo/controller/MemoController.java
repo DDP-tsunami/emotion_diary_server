@@ -1,6 +1,7 @@
 package com.dadaepo.emo.controller;
 
 import com.dadaepo.emo.dto.memo.*;
+import com.dadaepo.emo.exception.BusinessException;
 import com.dadaepo.emo.service.MemoService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -19,7 +20,7 @@ public class MemoController {
 
     @ApiOperation(value = "감정 등록")
     @PostMapping()
-    public ResponseEntity<Object> addMemo(@RequestBody EmotionRequest emotionRequest) {
+    public ResponseEntity<Object> addMemo(@RequestBody EmotionRequest emotionRequest) throws BusinessException {
         memoService.addMemo(emotionRequest);
         return new ResponseEntity<>("success", HttpStatus.OK);
     }

@@ -14,8 +14,12 @@ public interface MemberDao {
 
     int insertMember(Member member);
     Member selectUserByUserId(String userId);
+    String selectUserEmail(String email);
+    String selectUserId(String userId);
+
     List<String> selectUserAuthOneByUserId(String userId);
     int updateProfile(MemberUpdateRequest request, @Param(value = "userId") String userId);
     MemberInfo selectUserByMemberId(long memberId);
-    List<MemberInfo> selectUserByEmail(String email, long memberId, NoticeType noticeType);
+    List<MemberInfo> selectUsersByEmail(String email, long memberId, NoticeType noticeType);
+
 }

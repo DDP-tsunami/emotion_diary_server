@@ -9,6 +9,8 @@ import com.dadaepo.emo.dto.member.Member;
 import com.dadaepo.emo.dto.member.MemberInfo;
 import com.dadaepo.emo.dto.notice.NoticeRequest;
 import com.dadaepo.emo.enums.NoticeType;
+import com.dadaepo.emo.exception.BusinessException;
+import com.dadaepo.emo.exception.friend.FriendDuplicationException;
 import com.dadaepo.emo.service.FriendService;
 import com.dadaepo.emo.util.SecurityUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -31,7 +33,7 @@ public class FriendServiceImpl implements FriendService {
     private NoticeDao noticeDao;
 
     @Override
-    public void sendFriendNotice(NoticeRequest noticeRequest) {
+    public void sendFriendNotice(NoticeRequest noticeRequest) throws BusinessException {
         Member member = memberDao.selectUserByUserId(SecurityUtil.getCurrentUsername());
         noticeRequest.setSendId(member.getId());
         noticeRequest.setType(NoticeType.FRIEND_REQUEST);
@@ -39,29 +41,32 @@ public class FriendServiceImpl implements FriendService {
         int insertNotice = noticeDao.insertFriendNotice(noticeRequest);
         if (insertNotice != 1) {
             log.error("친구 알림 보내기를 실패하였습니다.");
+            throw new BusinessException();
         }
     }
 
     @Override
-    public void deleteFriendNotice(long noticeId) {
+    public void deleteFriendNotice(long noticeId) throws BusinessException {
         int deleteFriendNotice = friendDao.deleteFriendNotice(noticeId);
         if (deleteFriendNotice != 1) {
             log.error("친구 (거절/요청 삭제) 중 에러가 발생하였습니다.");
+            throw new BusinessException();
         }
     }
 
     @Override
-    public boolean acceptFriend(FriendRequest friendRequest) {
+    public boolean acceptFriend(FriendRequest friendRequest) throws BusinessException{
         Member member = memberDao.selectUserByUserId(SecurityUtil.getCurrentUsername());
         friendRequest.setMeId(member.getId());
 
         if(friendDao.isFriend(friendRequest.getMeId(), friendRequest.getYouId()) != null) {
-            log.info("이미 친구입니다!");
-            return false;
+            log.error("이미 친구입니다!");
+            throw new FriendDuplicationException();
         }
         int insertFriend = friendDao.insertFriend(friendRequest);
         if (insertFriend != 1) {
             log.error("친구 등록 중 에러가 발생하였습니다.");
+            throw new BusinessException();
         }
 
         NoticeRequest sendNoticeRequest = new NoticeRequest();
@@ -72,6 +77,7 @@ public class FriendServiceImpl implements FriendService {
         int insertNotice = noticeDao.insertFriendNotice(sendNoticeRequest);
         if (insertNotice != 1) {
             log.error("친구 수락 알림 보내기를 실패하였습니다.");
+            throw new BusinessException();
         }
 
         NoticeRequest receiveNoticeRequest = new NoticeRequest();
@@ -82,6 +88,7 @@ public class FriendServiceImpl implements FriendService {
         insertNotice = noticeDao.insertFriendNotice(receiveNoticeRequest);
         if (insertNotice != 1) {
             log.error("친구 수락 알림 보내기를 실패하였습니다.");
+            throw new BusinessException();
         }
 
         deleteFriendNotice(friendRequest.getNoticeId());
@@ -102,12 +109,13 @@ public class FriendServiceImpl implements FriendService {
     }
 
     @Override
-    public void deleteFriend(long deleteMemberId) {
+    public void deleteFriend(long deleteMemberId) throws BusinessException{
         Member member = memberDao.selectUserByUserId(SecurityUtil.getCurrentUsername());
 
         int deleteFriend = friendDao.deleteFriend(deleteMemberId, member.getId());
         if (deleteFriend != 1) {
             log.error("친구 삭제 중 에러가 발생하였습니다.");
+            throw new BusinessException();
         }
     }
 

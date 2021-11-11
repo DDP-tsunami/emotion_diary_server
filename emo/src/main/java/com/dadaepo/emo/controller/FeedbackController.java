@@ -3,6 +3,7 @@ package com.dadaepo.emo.controller;
 import com.dadaepo.emo.dto.feedback.MyReactionResponse;
 import com.dadaepo.emo.dto.feedback.ReactionRequest;
 import com.dadaepo.emo.dto.feedback.ReactionResponse;
+import com.dadaepo.emo.exception.BusinessException;
 import com.dadaepo.emo.service.FeedbackService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +20,7 @@ public class FeedbackController {
 
     @ApiOperation("반응 등록")
     @PostMapping
-    public ResponseEntity<Object> addReaction(@RequestBody ReactionRequest reactionRequest) {
+    public ResponseEntity<Object> addReaction(@RequestBody ReactionRequest reactionRequest) throws BusinessException {
         feedbackService.addReaction(reactionRequest);
         return new ResponseEntity<>("success", HttpStatus.OK);
     }
@@ -32,14 +33,14 @@ public class FeedbackController {
 
     @ApiOperation("반응 수정 하기")
     @PutMapping()
-    public ResponseEntity<Object> updateReaction(@RequestBody ReactionRequest reactionRequest) {
+    public ResponseEntity<Object> updateReaction(@RequestBody ReactionRequest reactionRequest) throws BusinessException{
         feedbackService.updateReaction(reactionRequest);
         return new ResponseEntity<>("success", HttpStatus.OK);
     }
 
     @ApiOperation("반응 취소")
     @DeleteMapping("/{reactionId}")
-    public ResponseEntity<Object> deleteReaction(@PathVariable("reactionId") int reactionId) {
+    public ResponseEntity<Object> deleteReaction(@PathVariable("reactionId") int reactionId) throws BusinessException{
         feedbackService.deleteReaction(reactionId);
         return new ResponseEntity<>("success", HttpStatus.OK);
     }

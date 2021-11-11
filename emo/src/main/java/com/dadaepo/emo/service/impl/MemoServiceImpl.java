@@ -4,6 +4,8 @@ import com.dadaepo.emo.dao.MemberDao;
 import com.dadaepo.emo.dao.MemoDao;
 import com.dadaepo.emo.dto.member.Member;
 import com.dadaepo.emo.dto.memo.*;
+import com.dadaepo.emo.exception.BusinessException;
+import com.dadaepo.emo.exception.memo.MemoDuplicationException;
 import com.dadaepo.emo.service.MemoService;
 import com.dadaepo.emo.util.DateUtil;
 import com.dadaepo.emo.util.SecurityUtil;
@@ -24,14 +26,14 @@ public class MemoServiceImpl implements MemoService {
     private MemberDao memberDao;
 
     @Override
-    public void addMemo(EmotionRequest emotionRequest) {
+    public void addMemo(EmotionRequest emotionRequest) throws BusinessException{
 
         // 이미 오늘 감정을 기록했다면 중복 등록 에러
         if(getEmotionToday().getTotalCount() > 0) {
             log.error("이미 감정을 등록하였습니다.");
-
-            return;
+            throw new MemoDuplicationException();
         }
+
         Member member = memberDao.selectUserByUserId(SecurityUtil.getCurrentUsername());
         emotionRequest.setMemberId(member.getId());
 

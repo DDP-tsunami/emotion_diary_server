@@ -4,8 +4,11 @@ import com.dadaepo.emo.enums.Role;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.validation.constraints.NotEmpty;
+
 @Getter
 @Setter
+@NotEmpty
 public class MemberSignupRequest {
     private String userId;
     private String nickname;

@@ -1,6 +1,10 @@
 package com.dadaepo.emo.controller;
 
-import com.dadaepo.emo.dto.member.*;
+import com.dadaepo.emo.dto.member.Member;
+import com.dadaepo.emo.dto.member.MemberInfoResponse;
+import com.dadaepo.emo.dto.member.MemberSignupRequest;
+import com.dadaepo.emo.dto.member.MemberUpdateRequest;
+import com.dadaepo.emo.exception.BusinessException;
 import com.dadaepo.emo.service.MemberService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -8,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 @Api("회원 관리")
 @RestController
@@ -19,7 +25,7 @@ public class MemberController {
 
     @ApiOperation(value = "회원 가입")
     @PostMapping(value = "/signup")
-    public ResponseEntity<Object> signup(@RequestBody MemberSignupRequest request) {
+    public ResponseEntity<Object> signup(@RequestBody @Valid MemberSignupRequest request) throws Exception  {
         memberService.signup(request);
         return new ResponseEntity<>("success", HttpStatus.OK);
     }
@@ -42,7 +48,7 @@ public class MemberController {
 
     @ApiOperation(value = "프로필 변경")
     @PutMapping(value = "/profile")
-    public ResponseEntity<Object> updateProfile(@RequestBody MemberUpdateRequest request) {
+    public ResponseEntity<Object> updateProfile(@RequestBody MemberUpdateRequest request) throws BusinessException {
         memberService.updateProfile(request);
         return new ResponseEntity<>("success", HttpStatus.OK);
     }

@@ -42,7 +42,17 @@
         FROM member
         WHERE id = #{memberId}
     </select>
-    <select id="selectUserByEmail" resultType="com.dadaepo.emo.dto.member.MemberInfo">
+    <select id="selectUserId" resultType="String">
+        SELECT user_id AS userId
+        FROM member
+        WHERE user_id = #{userId}
+    </select>
+    <select id="selectUserEmail" resultType="String">
+        SELECT email
+        FROM member
+        WHERE email = #{email}
+    </select>
+    <select id="selectUsersByEmail" resultType="com.dadaepo.emo.dto.member.MemberInfo">
         SELECT id
             , user_id AS userId
             , email

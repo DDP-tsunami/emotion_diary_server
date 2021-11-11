@@ -3,10 +3,12 @@ package com.dadaepo.emo.dto.friend;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.validation.constraints.NotEmpty;
+
 @Getter
 @Setter
 public class FriendRequest {
-    private long noticeId;
+    @NotEmpty private long noticeId;
     private long meId;
-    private long youId;
+    @NotEmpty private long youId;
 }
