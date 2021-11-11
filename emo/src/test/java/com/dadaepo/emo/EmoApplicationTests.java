@@ -1,5 +1,6 @@
 package com.dadaepo.emo;
 
+import com.dadaepo.emo.util.DateUtil;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -7,7 +8,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 class EmoApplicationTests {
 
 	@Test
-	void contextLoads() {
+	void dateTest() {
+		System.out.println(DateUtil.getToday());
+		System.out.println(DateUtil.getToday().plusDays(1));
+
 	}
 
 }

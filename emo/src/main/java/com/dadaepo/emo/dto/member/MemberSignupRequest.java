@@ -8,12 +8,12 @@ import javax.validation.constraints.NotEmpty;
 
 @Getter
 @Setter
-@NotEmpty
+
 public class MemberSignupRequest {
-    private String userId;
-    private String nickname;
-    private String name;
-    private String password;
-    private String email;
+    @NotEmpty private String userId;
+    @NotEmpty private String nickname;
+    @NotEmpty private String name;
+    @NotEmpty private String password;
+    @NotEmpty private String email;
     private Role role;
 }
