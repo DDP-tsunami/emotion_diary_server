@@ -38,13 +38,13 @@ public class FeedbackController {
     }
 
     @ApiOperation("반응 취소")
-    @PutMapping("/{reactionId}")
+    @DeleteMapping("/{reactionId}")
     public ResponseEntity<Object> deleteReaction(@PathVariable("reactionId") int reactionId) {
         feedbackService.deleteReaction(reactionId);
         return new ResponseEntity<>("success", HttpStatus.OK);
     }
 
-    @ApiOperation(value = "내 반응 확인", notes = "null : 반응 한적 없음 /status 0 : 반응 취소 상태, 1 : 반응 상태")
+    @ApiOperation(value = "내 반응 확인", notes = "null : 리액션 없음 / 객체 있으면 : ")
     @GetMapping(value = "/myReaction/{memoId}")
     public ResponseEntity<MyReactionResponse> getMyReactionStatus(@PathVariable("memoId") long memoId) {
         return ResponseEntity.ok(feedbackService.getMyReactionStatus(memoId));

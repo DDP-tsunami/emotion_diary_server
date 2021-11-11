@@ -7,5 +7,4 @@ import lombok.Getter;
 public class MyReactionResponse {
     private Reaction reaction;
     private long reactionId;
-    private boolean status;
 }

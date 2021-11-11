@@ -90,8 +90,8 @@ public class FeedbackServiceImpl implements FeedbackService {
             log.error("리액션 알림 삭제에 실패하였습니다.");
         }
 
-        int updateStatus = feedbackDao.cancelReaction(reactionId);
-        if (updateStatus != 1) {
+        int cancelReaction = feedbackDao.cancelReaction(reactionId);
+        if (cancelReaction != 1) {
             log.error("리액션 취소에 실패하였습니다.");
         }
     }

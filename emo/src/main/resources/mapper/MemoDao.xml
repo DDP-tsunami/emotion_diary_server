@@ -70,4 +70,22 @@
         FROM memo
         WHERE id = #{emotionId}
     </select>
+    <select id="selectMemoToday" resultType="com.dadaepo.emo.dto.memo.Memo">
+        SELECT memo.id
+        , member_id AS memberId
+        , profile_photo_url AS profilePhotoUrl
+        , name
+        , nickname
+        , emotion
+        , emotion_scope AS emotionScope
+        , detail
+        , detail_scope AS detailScope
+        , memo.date
+        FROM memo
+        INNER JOIN member
+        ON memo.member_id = member.id
+        WHERE memo.date >= '${today} 00:00:00'
+            AND memo.date <![CDATA[ < ]]> '${tomorrow} 00:00:00'
+            AND member_id = #{memberId}
+    </select>
 </mapper>

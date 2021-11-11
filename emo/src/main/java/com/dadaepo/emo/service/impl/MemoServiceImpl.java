@@ -5,6 +5,7 @@ import com.dadaepo.emo.dao.MemoDao;
 import com.dadaepo.emo.dto.member.Member;
 import com.dadaepo.emo.dto.memo.*;
 import com.dadaepo.emo.service.MemoService;
+import com.dadaepo.emo.util.DateUtil;
 import com.dadaepo.emo.util.SecurityUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,8 +25,16 @@ public class MemoServiceImpl implements MemoService {
 
     @Override
     public void addMemo(EmotionRequest emotionRequest) {
+
+        // 이미 오늘 감정을 기록했다면 중복 등록 에러
+        if(getEmotionToday().getTotalCount() > 0) {
+            log.error("이미 감정을 등록하였습니다.");
+
+            return;
+        }
         Member member = memberDao.selectUserByUserId(SecurityUtil.getCurrentUsername());
         emotionRequest.setMemberId(member.getId());
+
         int insertMemo = memoDao.insertMemo(emotionRequest);
         if(insertMemo != 1) {
             log.error("감정 등록에 실패하였습니다.");
@@ -70,6 +79,23 @@ public class MemoServiceImpl implements MemoService {
         emotionDetailResponse.setDetail(memoDao.selectEmotionDetail(emotionId));
 
         return emotionDetailResponse;
+    }
+
+    @Override
+    public MemoResponse getEmotionToday() {
+        Member member = memberDao.selectUserByUserId(SecurityUtil.getCurrentUsername());
+        MemoResponse memoResponse = new MemoResponse();
+        List<Memo> emotionToday = memoDao.selectMemoToday(member.getId(), DateUtil.getToday().toString(), DateUtil.getToday().plusDays(1).toString());
+
+        memoResponse.setMemoList(emotionToday);
+        memoResponse.setTotalCount(emotionToday.size());
+
+        if(memoResponse.getTotalCount() < 0 || memoResponse.getTotalCount() > 1) {
+            log.error("잘못된 값을 가져왔습니다.");
+            return null;
+        }
+
+        return memoResponse;
     }
 
 }

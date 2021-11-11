@@ -1,13 +1,12 @@
 package com.dadaepo.emo.service;
 
-import com.dadaepo.emo.dto.memo.EmotionDetailResponse;
-import com.dadaepo.emo.dto.memo.EmotionRequest;
-import com.dadaepo.emo.dto.memo.LineResponse;
-import com.dadaepo.emo.dto.memo.MemoResponse;
+import com.dadaepo.emo.dto.memo.*;
+import org.springframework.transaction.annotation.Transactional;
 
 public interface MemoService {
     int FEED_LIMIT = 5;
 
+    @Transactional
     void addMemo(EmotionRequest emotionRequest);
 
     MemoResponse getMemoForMonth(String month);
@@ -15,4 +14,6 @@ public interface MemoService {
     LineResponse getFeed(int start);
 
     EmotionDetailResponse getEmotionDetail(long emotionId);
+
+    MemoResponse getEmotionToday();
 }

@@ -18,4 +18,6 @@ public interface MemoDao {
     int countFeedByUserId(long memberId);
 
     String selectEmotionDetail(long emotionId);
+
+    List<Memo> selectMemoToday(long memberId, String today, String tomorrow);
 }

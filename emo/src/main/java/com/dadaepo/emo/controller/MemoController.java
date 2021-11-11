@@ -1,9 +1,6 @@
 package com.dadaepo.emo.controller;
 
-import com.dadaepo.emo.dto.memo.EmotionDetailResponse;
-import com.dadaepo.emo.dto.memo.EmotionRequest;
-import com.dadaepo.emo.dto.memo.LineResponse;
-import com.dadaepo.emo.dto.memo.MemoResponse;
+import com.dadaepo.emo.dto.memo.*;
 import com.dadaepo.emo.service.MemoService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -43,5 +40,11 @@ public class MemoController {
     @GetMapping("/detail/{emotionId}")
     public ResponseEntity<EmotionDetailResponse> getEmotionDetail(@PathVariable("emotionId") long emotionId) {
         return ResponseEntity.ok(memoService.getEmotionDetail(emotionId));
+    }
+
+    @ApiOperation(value = "오늘 등록된 감정 받아오기")
+    @GetMapping("/today")
+    public ResponseEntity<MemoResponse> getEmotionToday() {
+        return ResponseEntity.ok(memoService.getEmotionToday());
     }
 }

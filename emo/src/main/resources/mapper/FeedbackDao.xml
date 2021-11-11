@@ -35,8 +35,7 @@
         GROUP BY reaction
     </select>
     <select id="selectMyReactionStatus" resultType="com.dadaepo.emo.dto.feedback.MyReactionResponse">
-        SELECT status
-            , id AS reactionId
+        SELECT id AS reactionId
             , reaction
         FROM feedback
         WHERE memo_id = #{memoId}
@@ -44,12 +43,11 @@
     </select>
     <update id="updateReaction">
         UPDATE feedback
-        SET reaction = #{reaction}, status = true
+        SET reaction = #{reaction}
         WHERE id = #{reactionId}
     </update>
     <update id="cancelReaction">
-        UPDATE feedback
-        SET status = false
+        DELETE FROM feedback
         WHERE id = #{reactionId}
     </update>
 </mapper>
