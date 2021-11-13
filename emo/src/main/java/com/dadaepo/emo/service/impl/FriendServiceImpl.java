@@ -64,7 +64,7 @@ public class FriendServiceImpl implements FriendService {
             throw new FriendDuplicationException();
         }
         int insertFriend = friendDao.insertFriend(friendRequest);
-        if (insertFriend != 1) {
+        if (insertFriend < 1) {
             log.error("친구 등록 중 에러가 발생하였습니다.");
             throw new BusinessException();
         }
@@ -113,7 +113,7 @@ public class FriendServiceImpl implements FriendService {
         Member member = memberDao.selectUserByUserId(SecurityUtil.getCurrentUsername());
 
         int deleteFriend = friendDao.deleteFriend(deleteMemberId, member.getId());
-        if (deleteFriend != 1) {
+        if (deleteFriend < 1) {
             log.error("친구 삭제 중 에러가 발생하였습니다.");
             throw new BusinessException();
         }
