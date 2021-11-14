@@ -6,7 +6,9 @@ import com.dadaepo.emo.exception.BusinessException;
 public interface MemberService {
     void signup(MemberSignupRequest request)  throws BusinessException;
 
-    boolean isExist(String userId);
+    ExistResponse isUserIdExist(String userId);
+
+    ExistResponse isEmailExist(String email);
 
     void updateProfile(MemberUpdateRequest request) throws BusinessException;
 

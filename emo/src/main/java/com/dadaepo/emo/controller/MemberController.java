@@ -1,9 +1,6 @@
 package com.dadaepo.emo.controller;
 
-import com.dadaepo.emo.dto.member.Member;
-import com.dadaepo.emo.dto.member.MemberInfoResponse;
-import com.dadaepo.emo.dto.member.MemberSignupRequest;
-import com.dadaepo.emo.dto.member.MemberUpdateRequest;
+import com.dadaepo.emo.dto.member.*;
 import com.dadaepo.emo.exception.BusinessException;
 import com.dadaepo.emo.service.MemberService;
 import io.swagger.annotations.Api;
@@ -37,13 +34,15 @@ public class MemberController {
     }
 
     @ApiOperation(value = "회원 아이디 중복 확인")
-    @GetMapping(value = "/existence")
-    public ResponseEntity<Object> isExist(@RequestParam("userId") String userId) {
-        String exist = "false";
-        if(memberService.isExist(userId)) {
-            exist = "true";
-        }
-        return new ResponseEntity<>(exist, HttpStatus.OK);
+    @GetMapping(value = "/existence/userId")
+    public ResponseEntity<ExistResponse> isUserIdExist(@RequestParam("userId") String userId) {
+        return ResponseEntity.ok(memberService.isUserIdExist(userId));
+    }
+
+    @ApiOperation(value = "회원 이메일 중복 확인")
+    @GetMapping(value = "/existence/email")
+    public ResponseEntity<ExistResponse> isEmailExist(@RequestParam("email") String email) {
+        return ResponseEntity.ok(memberService.isEmailExist(email));
     }
 
     @ApiOperation(value = "프로필 변경")

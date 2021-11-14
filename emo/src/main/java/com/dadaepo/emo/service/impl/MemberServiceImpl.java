@@ -47,6 +47,30 @@ public class MemberServiceImpl implements MemberService {
         }
     }
 
+    @Override
+    public ExistResponse isUserIdExist(String newUserId) {
+        ExistResponse existResponse;
+        String userId = memberDao.selectUserId(newUserId);
+        if (userId == null) {
+            existResponse = new ExistResponse(false);
+        } else {
+            existResponse = new ExistResponse(true);
+        }
+        return existResponse;
+    }
+
+    @Override
+    public ExistResponse isEmailExist(String newEmail) {
+        ExistResponse existResponse;
+        String email = memberDao.selectUserEmail(newEmail);
+        if (email == null) {
+            existResponse = new ExistResponse(false);
+        } else {
+            existResponse = new ExistResponse(true);
+        }
+        return existResponse;
+    }
+
     private void checkDuplication(MemberSignupRequest request) throws BusinessException{
         String userId = memberDao.selectUserId(request.getUserId());
         String email = memberDao.selectUserEmail(request.getEmail());
@@ -55,15 +79,6 @@ public class MemberServiceImpl implements MemberService {
         } else if(email != null && email.equals(request.getEmail())) {
             throw new EmailException();
         }
-    }
-
-    @Override
-    public boolean isExist(String newUserId) {
-        Member member = memberDao.selectUserByUserId(newUserId);
-        if (member == null) {
-            return false;
-        }
-        return true;
     }
 
     @Override
